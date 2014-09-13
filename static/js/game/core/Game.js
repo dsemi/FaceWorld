@@ -3,35 +3,22 @@
 define(function(require) {
   var AssetManager = require('game/core/AssetManager');
 
-  var Game = function(canvasId) {
+  var Game = function(canvasId, onload) {
     var self = this;
-    this._entities = [];
-    this._canvas = document.getElementById(canvasId);
-    this._manager = new AssetManager(function() {
-        self.onLoad();
+    this.onLoad = onload;
+    this.entities = [];
+    this.canvas = document.getElementById(canvasId);
+    this.ctx = this.canvas.getContext('2d');
+    this.manager = new AssetManager(function() {
+        if (self.onload) {
+          self.onLoad();
+        }
     });
   };
 
   Game.prototype = {
     addEntity : function(entity) {
-      this._entities.push(entity);
-      entity.load(this._manager);
-    },
-
-    getCanvas : function() {
-      return this.canvas;
-    },
-
-    setCanvas : function(canvas) {
-      this.canvas = canvas;
-    },
-
-    getManager : function() {
-      return this._manager;
-    },
-
-    getEntities : function() {
-      return this._entities;
+      this.entities.push(entity);
     },
 
     onLoad : function() {
@@ -65,21 +52,24 @@ define(function(require) {
     },
 
     render : function() {
-      this.canvas.clear();
+      // Clears the canvas
+      var ctx = this.canvas.getContext('2d');
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      
       this.onRender();
 
-      var entities = this.getEntities();
+      var entities = this.entities;
       var length = entities.length;
 
       for (var i = 0; i < length; i++) {
-          entities[i].render(this.canvas.getContext());
+          entities[i].render(ctx);
       }
     },
 
     update : function() {
       this.onUpdate();
 
-      var entities = this._entities;
+      var entities = this.entities;
       var length = entities.length;
 
       for (var i = 0; i < length; i++) {
@@ -89,4 +79,4 @@ define(function(require) {
   };
 
   return Game;
-})();
+});

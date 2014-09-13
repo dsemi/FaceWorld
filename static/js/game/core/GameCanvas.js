@@ -3,13 +3,13 @@
 define(function(require) {
     var GameCanvas = function(id) {
         this._canvas = document.getElementById(id);
-        this._context = this.element.getContext('2d');
+        this._context = this._canvas.getContext('2d');
     };
 
     GameCanvas.prototype = {
         clear : function() {
             var ctx = this.getContext();
-            ctx.clearRect(0, 0, this.element.width, this.element.height);
+            ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
         },
 
         getContext : function() {
@@ -17,19 +17,19 @@ define(function(require) {
         },
 
         getHeight : function() {
-            return this.element.height;
+            return this._canvas.height;
         },
 
         getWidth : function() {
-            return this.element.width;
+            return this._canvas.width;
         },
 
         setHeight : function(height) {
-            this.element.height = height;
+            this._canvas.height = height;
         },
 
         setWidth : function(width) {
-            this.element.width = width;
+            this._canvas.width = width;
         }
     };
 
