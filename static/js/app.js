@@ -1,8 +1,7 @@
 /* globals requirejs, require */
 
-require.config({
+requirejs.config({
    paths : {
-     '/' : '/static/js',
      'game' : '/static/js/game',
      'utils' : '/static/js/utils'
    }

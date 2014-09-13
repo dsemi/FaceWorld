@@ -18,18 +18,13 @@ define(function(require) {
   AssetManager.prototype = {
     _setupSoundManager : function() {
       var manager = this;
+      soundManager.setup({
+          url : '/static/thirdparty/soundmanager2/swf/',
 
-      var loader = new ScriptLoader(function() {
-          soundManager.setup({
-              url : '/static/game/thirdparty/soundmanager2/swf/',
-
-              onready : manager.onready ? manager.onready : function() {
-                  throw 'AssetManager should be used with an onready callback!';
-              }
-          });
+          onready : manager.onready ? manager.onready : function() {
+              throw 'AssetManager should be used with an onready callback!';
+          }
       });
-
-      loader.load('/static/game/thirdparty/soundmanager2/soundmanager2.js');
     },
 
     /**
