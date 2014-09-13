@@ -2,4 +2,5 @@ Flask>=0.10.1
 Werkzeug>=0.9.6
 docopt>=0.6.2
 requests>=2.3.0
+textblob>=0.8.4
 schema>=0.3.1
