@@ -39,15 +39,32 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
             game.ctx.drawImage(img, (-cam.x + j*width), (cam.y + i*height));
         }
     }
+
+    // Draw the marker
+    var me = game.me;
+    if (Math.pow(me.dest.x - me.x, 2) + Math.pow(me.dest.x - me.x, 2) > 10) {
+      game.ctx.drawImage(game.manager.get(Urls.marker), me.dest.x, me.dest.y);
+    }
   };
 
   game.start = function() {
-      game.manager.load('image', Urls.grass).onload = function() {
+      var count = 0;
+
+      game.manager.load('image', Urls.marker).onload = imageLoadHandler;
+      game.manager.load('image', Urls.grass).onload = imageLoadHandler;
+
+      function imageLoadHandler() {
+        if (count < 1) {
+          count++;
+          return;
+        }
+
+        // Start execution interval
         interval = setInterval(function() {
           game.update();
           game.render();
         }, GAME_SPEED);
-      };
+      }
     
     // A Friend for Myself
     var SPEED = 15;
@@ -69,6 +86,9 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
       if (dist > SPEED) {
         me.x += SPEED * dx / dist;
         me.y += SPEED * dy / dist;
+      } else {
+        me.dest.x = me.x;
+        me.dest.y = me.y;
       }
 
       cam.x = game.me.x - game.canvas.width / 2;
