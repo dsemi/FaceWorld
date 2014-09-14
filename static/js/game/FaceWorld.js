@@ -17,39 +17,28 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
     // Tile draw background
     var img = game.manager.get(Urls.grass),
         width = img.width,
-        height = img.height;
+        height = img.height,
+        size = 4, // Number of imgs in one side of square, make an even number
+        half = size / 2;
 
-    if (cam.x + game.canvas.width > 2*width) {
-        cam.x = 2*width-game.canvas.width;
+    if (cam.x + game.canvas.width > half*width) {
+        cam.x = half*width-game.canvas.width;
     }
-    if (cam.x < -2*width) {
-        cam.x = -2*width;
+    if (cam.x < -half*width) {
+        cam.x = -half*width;
     }
-    if (cam.y > 2*height) {
-        cam.y = 2*height;
+    if (cam.y > half*height) {
+        cam.y = half*height;
     }
-    if (cam.y - game.canvas.height < -2*height) {
-        cam.y = -2*height + game.canvas.height;
+    if (cam.y - game.canvas.height < -half*height) {
+        cam.y = -half*height + game.canvas.height;
     }
 
-    game.ctx.drawImage(img, (-cam.x - 2*width), (cam.y - 2*height));
-    game.ctx.drawImage(img, (-cam.x - width), (cam.y - 2*height));
-    game.ctx.drawImage(img, -cam.x, (cam.y - 2*height));
-    game.ctx.drawImage(img, (-cam.x + width), (cam.y - 2*height));
-    game.ctx.drawImage(img, (-cam.x - 2*width), (cam.y - height));
-    game.ctx.drawImage(img, (-cam.x - width), (cam.y - height));
-    game.ctx.drawImage(img, -cam.x, (cam.y - height));
-    game.ctx.drawImage(img, (-cam.x + width), (cam.y - height));
-    game.ctx.drawImage(img, (-cam.x - 2*width), cam.y);
-    game.ctx.drawImage(img, (-cam.x - width), cam.y);
-    game.ctx.drawImage(img, -cam.x, cam.y); 
-    game.ctx.drawImage(img, (-cam.x + width), cam.y);
-    game.ctx.drawImage(img, (-cam.x - 2*width), cam.y + height);
-    game.ctx.drawImage(img, (-cam.x - width), cam.y + height);
-    game.ctx.drawImage(img, -cam.x, cam.y + height); 
-    game.ctx.drawImage(img, (-cam.x + width), cam.y + height);
-
-
+    for (int i=-half; i < half; i++) {
+        for (int j=-half; j < half; j++) {
+            game.ctx.drawImage(img, (-cam.x + j*width), (cam.y + i*height));
+        }
+    }
   };
 
   game.start = function() {
