@@ -27,7 +27,6 @@ define(function(require) {
     },
 
     update : function(game) {
-
     }
   };
 

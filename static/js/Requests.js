@@ -21,9 +21,16 @@ define(function(require) {
     },
 
     getPicture : function(id, callback) {
-       Ajax.post('https://graph.facebook.com/v2.1/' + id + 'fields=picture')
+       Ajax.post('https://graph.facebook.com/v2.1/' + id + '?fields=picture')
         .success(callback)
         .fail(console.log.bind(console, 'Picture request failed :('))
+        .send();
+    },
+
+    getPosts : function(id, callback) {
+       Ajax.post('https://graph.facebook.com/v2.1/' + id + '/posts?limit=5')
+        .success(callback)
+        .fail(console.log.bind(console, 'Posts request failed :('))
         .send();
     }
   };
