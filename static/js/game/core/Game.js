@@ -22,23 +22,18 @@ define(function(require) {
     },
 
     onLoad : function() {
-      console.log('Game#onLoad called!');
     },
 
     onPause : function() {
-      console.log('Game#onPause called!');
     },
 
     onPlay : function() {
-      console.log('Game#onPlay called!');
     },
 
     onRender : function() {
-      console.log('Game#onRender called!');
     },
 
     onUpdate : function() {
-      console.log('Game#onUpdate called!');
     },
 
     pause : function() {

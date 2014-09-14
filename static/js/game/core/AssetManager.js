@@ -28,50 +28,48 @@ define(function(require) {
     },
 
     /**
-     *  Gets the asset with the given name.
-     * @return {Object} The asset with the given name.  If the asset has
+     *  Gets the asset with the given url.
+     * @return {Object} The asset with the given url.  If the asset has
      * not started to be loaded, then it will return undefined.
      * If the asset is in progress of being loaded, then it will return the
      * asset, but functionality will not work until it has completed.
      */
-    get : function(name) {
-        return this._assets[name];
+    get : function(url) {
+        return this._assets[url];
     },
 
     /**
      *  Loads a single asset.
-     * @param {String} name The unique identifier of this asset.
      * @param {String} type The type of asset to load (image or sound).
      * @param {String} url The url that this assset can be retrieved from.
      * @return {Object} asset An asset that has not yet been loaded.
      * Attach an onload to know when loading is complete.
      */
-    load : function(name, type, url) {
+    load : function(type, url) {
         if (arguments.length === 1) {
             var arg = arguments[0];
-            name = arg.name;
             type = arg.type;
             url = arg.url;
         }
 
-        var asset = this._assets[name];
+        var asset = this._assets[url];
 
         if (asset === undefined) {
             if (type === 'image') {
-                asset = this._loadImage(name, url);
+                asset = this._loadImage(url);
             } else if (type === 'sound') {
-                asset = this._loadSound(name, url);
+                asset = this._loadSound(url);
             }
         }
 
         return asset;
     },
 
-    _loadImage : function(name, url) {
-        var image = this._assets[name] = new Image();
+    _loadImage : function(url) {
+        var image = this._assets[url] = new Image();
 
         image.addEventListener('error', function() {
-            throw new Error('Unable to load image ' + name + ' from ' + url);
+            throw new Error('Unable to load image ' + url);
         });
 
         image.src = url;
@@ -79,16 +77,16 @@ define(function(require) {
         return image;
     },
 
-    _loadSound : function(name, url) {
-        var sound = this._assets[name] = soundManager.createSound({
-            id : name,
+    _loadSound : function(url) {
+        var sound = this._assets[url] = soundManager.createSound({
+            id : url,
             url : url,
             onload : function(e) {
                 sound.onload(e);
             }
         });
 
-        soundManager.load(name);
+        soundManager.load(url);
 
         return sound;
     },

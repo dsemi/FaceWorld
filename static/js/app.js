@@ -3,7 +3,8 @@
 requirejs.config({
    paths : {
      'game' : '/static/js/game',
-     'utils' : '/static/js/utils'
+     'utils' : '/static/js/utils',
+     'res' : '/static/res'
    }
 });
 
