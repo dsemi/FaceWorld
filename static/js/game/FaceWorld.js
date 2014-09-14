@@ -32,24 +32,11 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
         cam.y = -2*height + game.canvas.height;
     }
 
-    game.ctx.drawImage(img, (-cam.x - 2*width), (cam.y - 2*height));
-    game.ctx.drawImage(img, (-cam.x - width), (cam.y - 2*height));
-    game.ctx.drawImage(img, -cam.x, (cam.y - 2*height));
-    game.ctx.drawImage(img, (-cam.x + width), (cam.y - 2*height));
-    game.ctx.drawImage(img, (-cam.x - 2*width), (cam.y - height));
-    game.ctx.drawImage(img, (-cam.x - width), (cam.y - height));
-    game.ctx.drawImage(img, -cam.x, (cam.y - height));
-    game.ctx.drawImage(img, (-cam.x + width), (cam.y - height));
-    game.ctx.drawImage(img, (-cam.x - 2*width), cam.y);
-    game.ctx.drawImage(img, (-cam.x - width), cam.y);
-    game.ctx.drawImage(img, -cam.x, cam.y); 
-    game.ctx.drawImage(img, (-cam.x + width), cam.y);
-    game.ctx.drawImage(img, (-cam.x - 2*width), cam.y + height);
-    game.ctx.drawImage(img, (-cam.x - width), cam.y + height);
-    game.ctx.drawImage(img, -cam.x, cam.y + height); 
-    game.ctx.drawImage(img, (-cam.x + width), cam.y + height);
-
-
+    for (int i=-2; i < 2; i++) {
+        for (int j=-2; j < 2; j++) {
+            game.ctx.drawImage(img, (-cam.x + j*width), (cam.y + i*height));
+        }
+    }
   };
 
   game.start = function() {
