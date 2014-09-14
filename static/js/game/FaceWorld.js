@@ -43,7 +43,7 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
     // Draw the marker
     var me = game.me;
     if (Math.pow(me.dest.x - me.x, 2) + Math.pow(me.dest.x - me.x, 2) > 10) {
-      game.ctx.drawImage(game.manager.get(Urls.marker), me.dest.x, me.dest.y);
+      game.ctx.drawImage(game.manager.get(Urls.marker), me.dest.x - cam.x, me.dest.y - cam.y);
     }
   };
 
@@ -89,8 +89,8 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
       } else {
         me.dest.x = me.x;
         me.dest.y = me.y;
-        me.angle = 10;
       }
+
 
 
       cam.x = game.me.x - game.canvas.width / 2;

@@ -7,8 +7,6 @@ define(function(require) {
     this.id = id;
     this.x = Math.random() * 2000 - 1000;
     this.y = Math.random() * 2000 - 1000;
-    this.angle = 0;
-    this.angsign = -1;
   };
 
   Friend.prototype = {
@@ -33,10 +31,6 @@ define(function(require) {
           x = this.x - cam.x - stickImg.width / 2,
           y = this.y + cam.y - stickImg.height / 2;
 
-      if (this.angle != 0) {
-          game.ctx.rotate(this.angsign*this.angle, this.x+stickImg.width/2, this.y+stickImg.height/2);
-          this.angsign = -this.angsign;
-      }
 
       // Draws the base stick figure
       game.ctx.drawImage(stickImg, x, y);
@@ -50,10 +44,6 @@ define(function(require) {
       // Draws the friend's name
       game.ctx.fillText(this.name, x, y + stickImg.height + 25);
 
-      if (this.angle != 0) {
-          game.ctx.rotate(this.angsign*this.angle, this.x+stickImg.width/2, this.y+stickImg.height/2);
-          this.angle = 0;
-      }
 
     },
 
