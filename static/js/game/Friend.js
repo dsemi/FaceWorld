@@ -48,15 +48,14 @@ define(function(require) {
       // Statuses
       if (this.sayingStatus) {
         game.ctx.drawImage(game.manager.get(Urls.statusBubble), x, y - 70);
-        game.ctx.fillText(this.message, x, y - 50);
+        drawMultilineText(this.message, x, y - 50);
       }
     },
 
     sayStatus : function() {
       var self = this;
       Requests.getStatuses(this.id, function(res) {
-        self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].messsage
-            .replace(/(.{80})/g, function(v) { return v + '\r\n'; });
+        self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
         self.sayingStatus = true;
       });
       setTimeout(function() {
@@ -73,6 +72,25 @@ define(function(require) {
       }
     }
   };
+
+  function drawMultilineText(text, x, y) {
+      var textvalArr = toMultiLine(text);
+      var linespacing = 15;
+
+      // draw each line on canvas.
+      for(var i = 0; i < textvalArr.length; i++){
+          game.ctx.fillText(textvalArr[i], x + 20, y - 10);
+          y += linespacing;
+      }
+  }
+
+  // Creates an array where the <br/> tag splits the values.
+  function toMultiLine(text) {
+     var textArr = [];
+     text = text.replace(/(.{45})/g, function(v) {return v + '<br/>';});
+     textArr = text.split("<br/>");
+     return textArr;
+  }
 
   return Friend;
 });
