@@ -29,13 +29,14 @@ def sent():
     return send_file(img, mimetype='image/jpeg')
 
 @application.route('/fb/friends', methods=['POST'])
-def fbfriends():  
-    access_token = request.form.get('token')
+def fbfriends():
+    data = request.get_json()
+    access_token = data.get('token')
 
     if not access_token:
         return jsonify(message='Token required for Facebook authentication')
 
-    user_id = request.form.get('userId')
+    user_id = data.get('userId')
     
     if not user_id:
         return jsonify(message='User ID is required for Facebook authentication')
