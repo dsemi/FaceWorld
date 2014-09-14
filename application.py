@@ -46,7 +46,7 @@ def fbfriends():
         friends.extend(resp['data'])
         url = resp['paging'].get('next')
 
-    return jsonify(**{'friends': friends})
+    return jsonify(friends=friends)
     
   
 if __name__ == '__main__':
