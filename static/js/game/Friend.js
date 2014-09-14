@@ -5,7 +5,8 @@ define(function(require) {
   var Friend = function(id, name) {
     this.name = name;
     this.id = id;
-    this.x = this.y = 0;
+    this.x = Math.random() * 2000 - 1000;
+    this.y = Math.random() * 2000 - 1000;
   };
 
   Friend.prototype = {
@@ -25,8 +26,8 @@ define(function(require) {
     render : function(game) {
       // Calculates drawing location
       var cam = game.camera,
-          x = this.x - (cam.x - cam.deltawidth),
-          y = this.y + cam.y - cam.deltaheight;
+          x = this.x - cam.x,
+          y = this.y + cam.y;
 
       // Draws the base stick figure
       var stickImg = game.manager.get(Urls.basicStick);
