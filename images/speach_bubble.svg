@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="speach_bubble.svg">
+   sodipodi:docname="speach_bubble.svg"
+   inkscape:export-filename="/home/kruddick/Creations/Programming/PennAppsX/FaceWorld/static/res/speach_bubble.png"
+   inkscape:export-xdpi="27.944799"
+   inkscape:export-ydpi="27.944799">
   <defs
      id="defs4">
     <linearGradient
@@ -25,7 +28,7 @@
          offset="0"
          id="stop3309" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:0;"
+         style="stop-color:#ffffff;stop-opacity:1;"
          offset="1"
          id="stop3311" />
     </linearGradient>
@@ -42,7 +45,7 @@
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient3027"
+       xlink:href="#linearGradient3307"
        id="linearGradient3033"
        x1="539.42145"
        y1="480.61584"
@@ -80,7 +83,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="427.37603"
+     inkscape:cx="68.771879"
      inkscape:cy="107.75891"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -102,6 +105,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -111,7 +115,7 @@
      id="layer1"
      transform="translate(73.649765,-83.717262)">
     <rect
-       style="fill:url(#linearGradient3033);fill-opacity:1;stroke:url(#linearGradient3041);stroke-width:8;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:url(#linearGradient3033);fill-opacity:1.0;stroke:url(#linearGradient3041);stroke-width:8;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect2985"
        width="901.05609"
        height="200.01021"

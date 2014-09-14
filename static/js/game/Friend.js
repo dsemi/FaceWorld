@@ -21,6 +21,7 @@ define(function(require) {
           self.faceLoaded = true;
         };
       });
+      game.manager.load('image', Urls.statusBubble);
     },
 
     render : function(game) {
@@ -44,10 +45,31 @@ define(function(require) {
       // Draws the friend's name
       game.ctx.fillText(this.name, x, y + stickImg.height + 25);
 
+      // Statuses
+      if (this.sayingStatus) {
+        game.ctx.drawImage(game.manager.get(Urls.statusBubble), x, y - 70);
+        game.ctx.fillText(this.message, x, y - 50);
+      }
+    },
 
+    sayStatus : function() {
+      var self = this;
+      Requests.getStatuses(this.id, function(res) {
+        self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
+        self.sayingStatus = true;
+      });
+      setTimeout(function() {
+        self.sayingStatus = false;
+      }, 10000);
     },
 
     update : function(game) {
+      if (!this.sayingStatus) {
+        var dist = Math.sqrt(Math.pow(game.me.x - this.x, 2) + Math.pow(game.me.y - this.y, 2));
+        if (dist < game.canvas.height / 2) {
+          this.sayStatus();
+        }
+      }
     }
   };
 

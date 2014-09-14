@@ -27,8 +27,8 @@ define(function(require) {
         .send();
     },
 
-    getPosts : function(id, callback) {
-       Ajax.get('https://graph.facebook.com/v2.1/' + id + '/posts?limit=(5)&access_token=' + token)
+    getStatuses : function(id, callback) {
+       Ajax.get('https://graph.facebook.com/v2.1/' + id + '?fields=statuses.limit(5)&access_token=' + token)
         .success(callback)
         .fail(console.log.bind(console, 'Posts request failed :('))
         .send();
