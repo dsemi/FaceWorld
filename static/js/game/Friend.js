@@ -40,7 +40,7 @@ define(function(require) {
       }
 
       // Draws the friend's name
-      game.ctx.fillText(this.name, x, y + stickImg.height);
+      game.ctx.fillText(this.name, x, y + stickImg.height + 25);
     },
 
     update : function(game) {

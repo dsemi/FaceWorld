@@ -14,6 +14,10 @@ require.config({
 });
 
 require(['game/FaceWorld', 'Requests', 'facebook'], function(FaceWorld, Requests) {
+  var canvas = document.getElementById('game-canvas');
+  canvas.width = canvas.parentElement.clientWidth;
+  canvas.height = canvas.parentElement.clientHeight;
+
   FB.init({
     appId      : '681230368635503',
     cookie     : true,  // enable cookies to allow the server to access 
