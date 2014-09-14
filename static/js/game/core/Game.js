@@ -1,4 +1,4 @@
-/* globals define, console */
+/* globals define */
 
 define(function(require) {
   var AssetManager = require('game/core/AssetManager');
