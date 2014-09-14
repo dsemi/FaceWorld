@@ -41,11 +41,17 @@ def fbfriends():
         return jsonify(message='User ID is required for Facebook authentication')
         
     url = '{}/{}/friends?access_token={}'.format(API_URL, user_id, access_token)
-    resp = requests.get(url).json()
+    try:
+        resp = requests.get(url).json()
+    except:
+        return jsonify(message="Error with request to Facebook")
     friends = resp['data']
     url = resp['paging'].get('next')
     while url:
-        resp = requests.get(url).json()
+        try:
+            resp = requests.get(url).json()
+        except:
+            return jsonify(message="Error with request to Facebook")
         friends.extend(resp['data'])
         url = resp['paging'].get('next')
 
