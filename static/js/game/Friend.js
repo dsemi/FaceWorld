@@ -29,15 +29,17 @@ define(function(require) {
           y = this.y + cam.y - cam.deltaheight;
 
       // Draws the base stick figure
-      game.ctx.drawImage(game.manager.get(Urls.basicStick), x, y);
+      var stickImg = game.manager.get(Urls.basicStick);
+      game.ctx.drawImage(stickImg, x, y);
 
       // Draws the profile picture face
       if (this.faceLoaded) {
-        game.ctx.drawImage(game.manager.get(this.faceUrl), x, y);
+        var faceImg = game.manager.get(this.faceUrl);
+        game.ctx.drawImage(faceImg, x + (stickImg.width - faceImg.width) / 2, y + 5);
       }
 
       // Draws the friend's name
-      game.ctx.fillText(this.name, x, y);
+      game.ctx.fillText(this.name, x, y + stickImg.height);
     },
 
     update : function(game) {
@@ -46,3 +48,4 @@ define(function(require) {
 
   return Friend;
 });
+
