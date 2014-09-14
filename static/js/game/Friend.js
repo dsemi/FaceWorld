@@ -24,13 +24,14 @@ define(function(require) {
     },
 
     render : function(game) {
+      var stickImg = game.manager.get(Urls.basicStick);
+
       // Calculates drawing location
       var cam = game.camera,
-          x = this.x - cam.x,
-          y = this.y + cam.y;
+          x = this.x - cam.x - stickImg.width / 2,
+          y = this.y + cam.y - stickImg.height / 2;
 
       // Draws the base stick figure
-      var stickImg = game.manager.get(Urls.basicStick);
       game.ctx.drawImage(stickImg, x, y);
 
       // Draws the profile picture face

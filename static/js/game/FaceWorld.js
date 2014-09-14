@@ -49,6 +49,12 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
         }, GAME_SPEED);
       };
     
+    // A Friend for Myself
+    game.me = new Friend('me', 'Me');
+    game.me.x = game.canvas.width / 2;
+    game.me.y = game.canvas.height / 2;
+    game.addEntity(game.me);
+
       Requests.getFriends(function(res) {
         JSON.parse(res).friends.forEach(function(data) {
           var friend = new Friend(data.id, data.name);
@@ -81,6 +87,9 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
     if (mouseDown) {
       cam.x += px - e.clientX;
       cam.y += e.clientY - py;
+
+      game.me.x += px - e.clientX;
+      game.me.y += py - e.clientY;
     }
 
     px = e.clientX;
