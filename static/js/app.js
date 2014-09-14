@@ -27,10 +27,12 @@ require(['game/FaceWorld', 'Requests', 'facebook'], function(FaceWorld, Requests
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     if (response.status === 'connected') {
-      Requests.setAuth(response.authResponse.userId, response.authResponse.accessToken);
+      document.getElementById('fb-login').style.display = 'none';
+      Requests.setAuth(response.authResponse.userID, response.authResponse.accessToken);
       FaceWorld.start();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
+      document.getElementById('fb-login').style.display = '';
       document.getElementById('status').innerHTML = 'Please log ' +
         'into this app.';
     } else {

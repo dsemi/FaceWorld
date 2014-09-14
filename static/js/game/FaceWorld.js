@@ -1,4 +1,5 @@
-define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls'], function(Game, AssetManager, Urls) {
+define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'], 
+       function(Game, AssetManager, Urls, Requests) {
   var CANVAS_ID = 'game-canvas',
       game = new Game(CANVAS_ID), 
       interval;
@@ -50,6 +51,8 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls'], function(Game
           game.render();
         }, GAME_SPEED);
       };
+    
+      Requests.getFriends(console.log.bind(console));
     };
     
     game.stop = function() {
