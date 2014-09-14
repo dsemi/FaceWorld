@@ -50,10 +50,30 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
       };
     
     // A Friend for Myself
+    var SPEED = 15;
     game.me = new Friend('me', 'Me');
     game.me.x = game.canvas.width / 2;
     game.me.y = game.canvas.height / 2;
+    game.me.dest = {
+      x : game.me.x,
+      y : game.me.y
+    };
     game.addEntity(game.me);
+
+    game.me.update = function() {
+      var me = game.me,
+          dy = me.dest.y - me.y,
+          dx = me.dest.x - me.x,
+          dist = Math.sqrt(Math.pow(dy, 2) + Math.pow(dx, 2));
+
+      if (dist > SPEED) {
+        me.x += SPEED * dx / dist;
+        me.y += SPEED * dy / dist;
+      }
+
+      cam.x = game.me.x - game.canvas.width / 2;
+      cam.y = game.canvas.height / 2 - game.me.y;
+    };
 
       Requests.getFriends(function(res) {
         JSON.parse(res).friends.forEach(function(data) {
@@ -67,33 +87,12 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
     clearInterval(interval);
   };
 
-
   // World movement
-  var mouseDown = false,
-      px = 0,
-      py = 0;
-
-  game.canvas.addEventListener('mousedown', function(e) {
-    px = e.clientX;
-    py = e.clientY;
-    mouseDown = true;
-  });
-
-  window.addEventListener('mouseup', function() {
-    mouseDown = false;
-  });
-
-  window.addEventListener('mousemove', function(e) {
-    if (mouseDown) {
-      cam.x += px - e.clientX;
-      cam.y += e.clientY - py;
-
-      game.me.x += px - e.clientX;
-      game.me.y += py - e.clientY;
-    }
-
-    px = e.clientX;
-    py = e.clientY;
+  game.canvas.addEventListener('click', function(e) {
+    game.me.dest = {
+      x : cam.x + e.clientX,
+      y : e.clientY - cam.y - 150
+    };
   });
 
   return game;
