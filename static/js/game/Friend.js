@@ -7,6 +7,7 @@ define(function(require) {
     this.id = id;
     this.x = Math.random() * 2000 - 1000;
     this.y = Math.random() * 2000 - 1000;
+    this.canSayNewStatus = true;
   };
 
   Friend.prototype = {
@@ -53,18 +54,23 @@ define(function(require) {
     },
 
     sayStatus : function() {
+      this.canSayNewStatus = false;
       var self = this;
       Requests.getStatuses(this.id, function(res) {
-        self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
         self.sayingStatus = true;
+        self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
       });
+
       setTimeout(function() {
         self.sayingStatus = false;
+        setTimeout(function() {
+          self.canSayNewStatus = true;
+        }, 5000);
       }, 10000);
     },
 
     update : function(game) {
-      if (!this.sayingStatus) {
+      if (this.canSayNewStatus) {
         var dist = Math.sqrt(Math.pow(game.me.x - this.x, 2) + Math.pow(game.me.y - this.y, 2));
         if (dist < game.canvas.height / 2) {
           this.sayStatus();
@@ -79,7 +85,7 @@ define(function(require) {
 
       // draw each line on canvas.
       for(var i = 0; i < textvalArr.length; i++){
-          game.ctx.fillText(textvalArr[i], x + 20, y - 10);
+          game.ctx.fillText(textvalArr[i], x + 15, y - 5);
           y += linespacing;
       }
   }
@@ -87,11 +93,10 @@ define(function(require) {
   // Creates an array where the <br/> tag splits the values.
   function toMultiLine(text) {
      var textArr = [];
-     text = text.replace(/(.{45})/g, function(v) {return v + '<br/>';});
+     text = text.replace(/(.{40})/g, function(v) {return v + '<br/>';});
      textArr = text.split("<br/>");
      return textArr;
   }
 
   return Friend;
 });
-
