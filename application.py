@@ -33,10 +33,13 @@ def fbfriends():
     access_token = request.form.get('token')
 
     if not access_token:
-        return jsonify('Token required for Facebook authentication')
-    
+        return jsonify(message='Token required for Facebook authentication')
+
     user_id = request.form.get('userId')
     
+    if not user_id:
+        return jsonify(message='User ID is required for Facebook authentication')
+        
     url = '{}/{}/friends?access_token={}'.format(API_URL, user_id, access_token)
     resp = requests.get(url).json()
     friends = resp['data']
