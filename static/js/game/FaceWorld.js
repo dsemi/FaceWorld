@@ -69,7 +69,9 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
       if (dist > SPEED) {
         me.x += SPEED * dx / dist;
         me.y += SPEED * dy / dist;
+        me.angle = 10;
       }
+
 
       cam.x = game.me.x - game.canvas.width / 2;
       cam.y = game.canvas.height / 2 - game.me.y;
