@@ -18,6 +18,13 @@ define(function(require) {
           token : token,
           userId : userId
         }));
+    },
+
+    getPicture : function(id, callback) {
+       Ajax.post('https://graph.facebook.com/v2.1/' + id + 'fields=picture')
+        .success(callback)
+        .fail(console.log.bind(console, 'Picture request failed :('))
+        .send();
     }
   };
 });
