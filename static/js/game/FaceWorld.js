@@ -110,7 +110,7 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
   };
 
   // World movement
-  game.canvas.addEventListener('click', function(e) {
+  game.canvas.addEventListener('mousedown', function(e) {
     game.me.dest = {
       x : cam.x + e.clientX,
       y : e.clientY - cam.y - 150

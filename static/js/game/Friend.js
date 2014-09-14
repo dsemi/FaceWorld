@@ -55,7 +55,8 @@ define(function(require) {
     sayStatus : function() {
       var self = this;
       Requests.getStatuses(this.id, function(res) {
-        self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
+        self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].messages
+            .replace(/(.{80})/g, function(v) { return v + '\r\n'; });
         self.sayingStatus = true;
       });
       setTimeout(function() {
