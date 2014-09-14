@@ -52,12 +52,14 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'],
         }, GAME_SPEED);
       };
     
-      Requests.getFriends(console.log.bind(console));
-    };
-    
-    game.stop = function() {
-      clearInterval(interval);
-    };
+      Requests.getFriends2(function(res) {
+        console.log(res);
+      });
+  };
+
+  game.stop = function() {
+    clearInterval(interval);
+  };
 
 
   // World movement

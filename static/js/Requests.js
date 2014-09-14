@@ -5,12 +5,13 @@ define(function(require) {
   
   return {
     setAuth : function(inUserId, inToken) {
-      userId = inUserId;
       token = inToken;
+      userId = inUserId;
     },
     
     getFriends : function(callback) {
       Ajax.post('fb/friends')
+        .setHeader('Content-Type', 'application/json')
         .success(callback)
         .fail(console.log.bind(console, 'Friends request failed :('))
         .send(JSON.stringify({
@@ -18,5 +19,12 @@ define(function(require) {
           userId : userId
         }));
     },
+
+    getFriends2 : function(callback) {
+      Ajax.get('https://graph.facebook.com/v2.1/' + userId + '/friends?access_token=' + token + '&fields=name,id')
+        .success(callback)
+        .fail(console.log.bind(console, 'Friends request failed :('))
+        .send();
+    }
   };
 });
