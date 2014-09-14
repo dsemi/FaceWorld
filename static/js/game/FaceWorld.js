@@ -19,37 +19,37 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
         width = img.width,
         height = img.height;
 
-    cam.deltawidth = 0;
-    cam.deltaheight = 0;
-
-    while (cam.x+game.canvas.width > width) {
-        cam.x -= width;
-        cam.deltawidth = -width;
+    if (cam.x + game.canvas.width > 2*width) {
+        cam.x = 2*width-game.canvas.width;
     }
-    while (cam.x < -width) {
-        cam.x += width;
-        cam.deltawidth = width;
+    if (cam.x < -2*width) {
+        cam.x = -2*width;
     }
-    while (cam.y > height) {
-        cam.y -= height;
-        cam.deltaheight = -height;
+    if (cam.y > 2*height) {
+        cam.y = 2*height;
     }
-    while (cam.y - game.canvas.height < -height) {
-        cam.y += height;
-        cam.deltaheight = height;
+    if (cam.y - game.canvas.height < -2*height) {
+        cam.y = -2*height + game.canvas.height;
     }
 
-    game.ctx.drawImage(img, (-cam.x - width), cam.y);
+    game.ctx.drawImage(img, (-cam.x - 2*width), (cam.y - 2*height));
+    game.ctx.drawImage(img, (-cam.x - width), (cam.y - 2*height));
+    game.ctx.drawImage(img, -cam.x, (cam.y - 2*height));
+    game.ctx.drawImage(img, (-cam.x + width), (cam.y - 2*height));
+    game.ctx.drawImage(img, (-cam.x - 2*width), (cam.y - height));
     game.ctx.drawImage(img, (-cam.x - width), (cam.y - height));
-    game.ctx.drawImage(img, -cam.x, cam.y);
     game.ctx.drawImage(img, -cam.x, (cam.y - height));
+    game.ctx.drawImage(img, (-cam.x + width), (cam.y - height));
+    game.ctx.drawImage(img, (-cam.x - 2*width), cam.y);
+    game.ctx.drawImage(img, (-cam.x - width), cam.y);
+    game.ctx.drawImage(img, -cam.x, cam.y); 
+    game.ctx.drawImage(img, (-cam.x + width), cam.y);
+    game.ctx.drawImage(img, (-cam.x - 2*width), cam.y + height);
+    game.ctx.drawImage(img, (-cam.x - width), cam.y + height);
+    game.ctx.drawImage(img, -cam.x, cam.y + height); 
+    game.ctx.drawImage(img, (-cam.x + width), cam.y + height);
 
-//    var canvas = game.canvas;
-//    for (var x = -cam.x % img.width; x <= cam.x + canvas.width; x += img.width) {
-//      for (var y = -cam.y % img.height; y <= cam.y + canvas.height; y += img.height) {
-//        game.ctx.drawImage(img, x, y);
-//      }
-//    }
+
   };
 
   game.start = function() {
@@ -63,8 +63,6 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
       Requests.getFriends(function(res) {
         JSON.parse(res).friends.forEach(function(data) {
           var friend = new Friend(data.id, data.name);
-          friend.x = Math.random() * 1000;
-          friend.y = Math.random() * 1000;
           game.addEntity(friend);
         });
       });
