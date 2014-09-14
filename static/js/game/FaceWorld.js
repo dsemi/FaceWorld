@@ -119,3 +119,4 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
 
   return game;
 });
+

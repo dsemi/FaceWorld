@@ -23,6 +23,8 @@ define(function(require) {
         };
       });
       game.manager.load('image', Urls.statusBubble);
+      game.manager.load('sound', Urls.A);
+      game.manager.load('sound', Urls.B);
     },
 
     render : function(game) {
@@ -50,10 +52,20 @@ define(function(require) {
       if (this.sayingStatus) {
         game.ctx.drawImage(game.manager.get(Urls.statusBubble), x, y - 70);
         drawMultilineText(this.message, x, y - 50);
+
+        // Talking -> sound
+        var sound = this.message.charCodeAt(this.ch) % 2 === 0 ? Urls.A : Urls.B;
+        this.ch += 1;
+
+        var dist = Math.sqrt(Math.pow(game.me.x - this.x, 2) + Math.pow(game.me.y - this.y, 2));
+        if (dist < 200) {
+          game.manager.get(sound).play();
+        }
       }
     },
 
     sayStatus : function() {
+      this.ch = 0;
       this.canSayNewStatus = false;
       var self = this;
       Requests.getStatuses(this.id, function(res) {
@@ -100,3 +112,4 @@ define(function(require) {
 
   return Friend;
 });
+

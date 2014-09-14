@@ -82,7 +82,9 @@ define(function(require) {
             id : url,
             url : url,
             onload : function(e) {
-                sound.onload(e);
+                if (sound.onload) {
+                  sound.onload(e);
+                }
             }
         });
 
