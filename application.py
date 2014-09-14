@@ -48,7 +48,7 @@ def fbfriends():
         return jsonify(message="Error with request to Facebook")
     friends = resp['data']
     page = resp.get('paging')
-    1url = page.get('next') if page else None
+    url = page.get('next') if page else None
     while url:
         try:
             resp = requests.get(url).json()
