@@ -4,6 +4,8 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'],
       game = new Game(CANVAS_ID), 
       interval;
   
+  window.game = game;
+
   var GAME_SPEED = 33;
 
   var cam = game.camera = {
@@ -53,7 +55,12 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'],
       };
     
       Requests.getFriends(function(res) {
-        console.log(res);
+        JSON.parse(res).forEach(function(data) {
+          var friend = new Friend(data.id, data.name);
+          friend.x = Math.random() * 2000;
+          friend.y = Math.random() * 2000;
+          game.addEntity(friend);
+        });
       });
   };
 

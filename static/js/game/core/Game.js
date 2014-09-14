@@ -19,6 +19,7 @@ define(function(require) {
   Game.prototype = {
     addEntity : function(entity) {
       this.entities.push(entity);
+      entity.load(game);
     },
 
     onLoad : function() {
