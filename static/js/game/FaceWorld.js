@@ -52,7 +52,7 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'],
         }, GAME_SPEED);
       };
     
-      Requests.getFriends2(function(res) {
+      Requests.getFriends(function(res) {
         console.log(res);
       });
   };

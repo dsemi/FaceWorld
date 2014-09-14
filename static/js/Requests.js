@@ -18,13 +18,6 @@ define(function(require) {
           token : token,
           userId : userId
         }));
-    },
-
-    getFriends2 : function(callback) {
-      Ajax.get('https://graph.facebook.com/v2.1/' + userId + '/friends?access_token=' + token + '&fields=name,id')
-        .success(callback)
-        .fail(console.log.bind(console, 'Friends request failed :('))
-        .send();
     }
   };
 });
