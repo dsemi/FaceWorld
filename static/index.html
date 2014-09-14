@@ -7,23 +7,19 @@
   </head>
   <body>
     <div class="header">
-      <h1>My World</h1>
-      <h2>The better way to experience Facebook</h2>
+      <div class="heading">
+        <h1>My World</h1>
+        <h2>The better way to experience Facebook</h2>
+      </div>
+
+      <div class="controls">
+        <fb:login-button id="fb-login" scope="public_profile,email,user_friends,read_stream,user_about_me,user_birthday,user_photos,user_status" onlogin="checkFBLoginState();" style="display:hidden;">
+        </fb:login-button>
+      </div>
     </div>
 
     <div class="canvas-container">
       <canvas id="game-canvas"></canvas>
-    </div>
-    <!--
-      Below we include the Login Button social plugin. This button uses
-      the JavaScript SDK to present a graphical Login button that triggers
-      the FB.login() function when clicked.
-    -->
-
-    <fb:login-button id="fb-login" scope="public_profile,email,user_friends,read_stream,user_about_me,user_birthday,user_photos,user_status" onlogin="checkFBLoginState();" style="display:hidden;">
-    </fb:login-button>
-
-    <div id="status">
     </div>
     
     <!-- Scripts -->
