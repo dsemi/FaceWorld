@@ -58,7 +58,7 @@ define(function(require) {
       var length = entities.length;
 
       for (var i = 0; i < length; i++) {
-          entities[i].render(ctx);
+          entities[i].render(this, ctx);
       }
     },
 

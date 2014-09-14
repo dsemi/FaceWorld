@@ -1,5 +1,5 @@
-define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'], 
-       function(Game, AssetManager, Urls, Requests) {
+define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'game/Friend'],
+       function(Game, AssetManager, Urls, Requests, Friend) {
   var CANVAS_ID = 'game-canvas',
       game = new Game(CANVAS_ID), 
       interval;
@@ -18,7 +18,6 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'],
     var img = game.manager.get(Urls.grass),
         width = img.width,
         height = img.height;
-
 
     while (cam.x+game.canvas.width > width) {
         cam.x -= width;
@@ -55,10 +54,10 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests'],
       };
     
       Requests.getFriends(function(res) {
-        JSON.parse(res).forEach(function(data) {
+        JSON.parse(res).friends.forEach(function(data) {
           var friend = new Friend(data.id, data.name);
-          friend.x = Math.random() * 2000;
-          friend.y = Math.random() * 2000;
+          friend.x = Math.random() * 1000;
+          friend.y = Math.random() * 1000;
           game.addEntity(friend);
         });
       });
