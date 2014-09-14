@@ -17,23 +17,25 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
     // Tile draw background
     var img = game.manager.get(Urls.grass),
         width = img.width,
-        height = img.height;
+        height = img.height,
+        size = 4, // Number of imgs in one side of square, make an even number
+        half = size / 2;
 
-    if (cam.x + game.canvas.width > 2*width) {
-        cam.x = 2*width-game.canvas.width;
+    if (cam.x + game.canvas.width > half*width) {
+        cam.x = half*width-game.canvas.width;
     }
-    if (cam.x < -2*width) {
-        cam.x = -2*width;
+    if (cam.x < -half*width) {
+        cam.x = -half*width;
     }
-    if (cam.y > 2*height) {
-        cam.y = 2*height;
+    if (cam.y > half*height) {
+        cam.y = half*height;
     }
-    if (cam.y - game.canvas.height < -2*height) {
-        cam.y = -2*height + game.canvas.height;
+    if (cam.y - game.canvas.height < -half*height) {
+        cam.y = -half*height + game.canvas.height;
     }
 
-    for (int i=-2; i < 2; i++) {
-        for (int j=-2; j < 2; j++) {
+    for (int i=-half; i < half; i++) {
+        for (int j=-half; j < half; j++) {
             game.ctx.drawImage(img, (-cam.x + j*width), (cam.y + i*height));
         }
     }
