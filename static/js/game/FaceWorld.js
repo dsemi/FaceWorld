@@ -34,8 +34,8 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
         cam.y = -half*height + game.canvas.height;
     }
 
-    for (int i=-half; i < half; i++) {
-        for (int j=-half; j < half; j++) {
+    for (var i=-half; i < half; i++) {
+        for (var j=-half; j < half; j++) {
             game.ctx.drawImage(img, (-cam.x + j*width), (cam.y + i*height));
         }
     }
