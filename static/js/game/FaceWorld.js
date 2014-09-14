@@ -1,4 +1,4 @@
-define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'game/Friend'],
+define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'game/Friend'], 
        function(Game, AssetManager, Urls, Requests, Friend) {
   var CANVAS_ID = 'game-canvas',
       game = new Game(CANVAS_ID), 
@@ -19,17 +19,24 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
         width = img.width,
         height = img.height;
 
+    cam.deltawidth = 0;
+    cam.deltaheight = 0;
+
     while (cam.x+game.canvas.width > width) {
         cam.x -= width;
+        cam.deltawidth = -width;
     }
     while (cam.x < -width) {
         cam.x += width;
+        cam.deltawidth = width;
     }
     while (cam.y > height) {
         cam.y -= height;
+        cam.deltaheight = -height;
     }
     while (cam.y - game.canvas.height < -height) {
         cam.y += height;
+        cam.deltaheight = height;
     }
 
     game.ctx.drawImage(img, (-cam.x - width), cam.y);
