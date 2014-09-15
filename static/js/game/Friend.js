@@ -1,6 +1,7 @@
 define(function(require) {
   var Urls = require('utils/Urls'),
-      Requests = require('Requests');
+      Requests = require('Requests'),
+      Xmath = require('utils/Xmath');
 
   var Friend = function(id, name) {
     this.name = name;
@@ -23,8 +24,6 @@ define(function(require) {
         };
       });
       game.manager.load('image', Urls.statusBubble);
-      game.manager.load('sound', Urls.A);
-      game.manager.load('sound', Urls.B);
     },
 
     render : function(game) {
@@ -52,25 +51,18 @@ define(function(require) {
       if (this.sayingStatus) {
         game.ctx.drawImage(game.manager.get(Urls.statusBubble), x, y - 70);
         drawMultilineText(this.message, x, y - 50);
-
-        // Talking -> sound
-        var sound = this.message.charCodeAt(this.ch) % 2 === 0 ? Urls.A : Urls.B;
-        this.ch += 1;
-
-        var dist = Math.sqrt(Math.pow(game.me.x - this.x, 2) + Math.pow(game.me.y - this.y, 2));
-        if (dist < 200) {
-          game.manager.get(sound).play();
-        }
       }
     },
 
     sayStatus : function() {
-      this.ch = 0;
-      this.canSayNewStatus = false;
       var self = this;
+      this.canSayNewStatus = false;
+
+      // Retrieves the status
       Requests.getStatuses(this.id, function(res) {
         self.sayingStatus = true;
         self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
+        meSpeak.speak(self.message);
       });
 
       setTimeout(function() {
@@ -83,8 +75,7 @@ define(function(require) {
 
     update : function(game) {
       if (this.canSayNewStatus) {
-        var dist = Math.sqrt(Math.pow(game.me.x - this.x, 2) + Math.pow(game.me.y - this.y, 2));
-        if (dist < game.canvas.height / 2) {
+        if (Xmath.dist(game.me.x, game.me.y, this.x, this.y) < game.canvas.height / 2) {
           this.sayStatus();
         }
       }

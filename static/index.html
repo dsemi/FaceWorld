@@ -24,6 +24,12 @@
     
     <!-- Scripts -->
     <script src="/static/thirdparty/soundmanager2/soundmanager2.js"></script>
+    <script src="/static/thirdparty/mespeak/mespeak.js"></script>
     <script data-main="/static/js/app.js" src="/static/thirdparty/require.js"></script>
+
+    <script>
+      meSpeak.loadConfig("/static/thirdparty/mespeak/mespeak_config.json");
+      meSpeak.loadVoice("/static/thirdparty/mespeak/voices/en/en.json");
+    </script>
   </body>
 </html>
