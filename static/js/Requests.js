@@ -1,6 +1,8 @@
 define(function(require) {
   var Ajax = require('utils/Ajax');
   
+  var GRAPH_ENDPOINT = 'https://graph.facebook.com/v2.1/';
+  
   var token, userId;
   
   return {
@@ -10,25 +12,21 @@ define(function(require) {
     },
     
     getFriends : function(callback) {
-      Ajax.post('fb/friends')
-        .setHeader('Content-Type', 'application/json')
+      Ajax.get(GRAPH_ENDPOINT + 'me?fields=friends{name,gender}&access_token=' + token)
         .success(callback)
         .fail(console.log.bind(console, 'Friends request failed :('))
-        .send(JSON.stringify({
-          token : token,
-          userId : userId
-        }));
+        .send();
     },
 
     getPicture : function(id, callback) {
-       Ajax.get('https://graph.facebook.com/v2.1/' + id + '?fields=picture&access_token=' + token)
+       Ajax.get(GRAPH_ENDPOINT + id + '?fields=picture&access_token=' + token)
         .success(callback)
         .fail(console.log.bind(console, 'Picture request failed :('))
         .send();
     },
 
     getStatuses : function(id, callback) {
-       Ajax.get('https://graph.facebook.com/v2.1/' + id + '?fields=statuses.limit(5)&access_token=' + token)
+       Ajax.get(GRAPH_ENDPOINT + id + '?fields=statuses.limit(5)&access_token=' + token)
         .success(callback)
         .fail(console.log.bind(console, 'Posts request failed :('))
         .send();

@@ -41,10 +41,10 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
     }
 
     // Draw the marker
-    var me = game.me;
-    if (Math.pow(me.dest.x - me.x, 2) + Math.pow(me.dest.x - me.x, 2) > 10) {
-//      game.ctx.drawImage(game.manager.get(Urls.marker), me.dest.x - cam.x, me.dest.y - cam.y);
-    }
+//    var me = game.me;
+//    if (Math.pow(me.dest.x - me.x, 2) + Math.pow(me.dest.x - me.x, 2) > 10) {
+////      game.ctx.drawImage(game.manager.get(Urls.marker), me.dest.x - cam.x, me.dest.y - cam.y);
+//    }
   };
 
   game.start = function() {
@@ -68,7 +68,10 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
     
     // A Friend for Myself
     var SPEED = 15;
-    game.me = new Friend('me', 'Me');
+    game.me = new Friend({
+      name : 'Me',
+      id : 'me'
+    });
     game.me.x = game.canvas.width / 2;
     game.me.y = game.canvas.height / 2;
     game.me.dest = {
@@ -91,15 +94,13 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
         me.dest.y = me.y;
       }
 
-
-
       cam.x = game.me.x - game.canvas.width / 2;
       cam.y = game.canvas.height / 2 - game.me.y;
     };
 
       Requests.getFriends(function(res) {
-        JSON.parse(res).friends.forEach(function(data) {
-          var friend = new Friend(data.id, data.name);
+        JSON.parse(res).friends.data.forEach(function(info) {
+          var friend = new Friend(info);
           game.addEntity(friend);
         });
       });

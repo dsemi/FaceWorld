@@ -3,9 +3,8 @@ define(function(require) {
       Requests = require('Requests'),
       Xmath = require('utils/Xmath');
 
-  var Friend = function(id, name) {
-    this.name = name;
-    this.id = id;
+  var Friend = function(info) {
+    this.info = info;
     this.x = Math.random() * 2000 - 1000;
     this.y = Math.random() * 2000 - 1000;
     this.canSayNewStatus = true;
@@ -17,7 +16,7 @@ define(function(require) {
       // Loads the stick image
       game.manager.load('image', Urls.basicStick);
       // Loads the profile picture
-      Requests.getPicture(this.id, function(res) {
+      Requests.getPicture(this.info.id, function(res) {
         self.faceUrl = JSON.parse(res).picture.data.url;
         game.manager.load('image', self.faceUrl).onload = function() {
           self.faceLoaded = true;
@@ -45,7 +44,7 @@ define(function(require) {
       }
 
       // Draws the friend's name
-      game.ctx.fillText(this.name, x, y + stickImg.height + 25);
+      game.ctx.fillText(this.info.name, x, y + stickImg.height + 25);
 
       // Statuses
       if (this.sayingStatus) {
@@ -59,10 +58,12 @@ define(function(require) {
       this.canSayNewStatus = false;
 
       // Retrieves the status
-      Requests.getStatuses(this.id, function(res) {
+      Requests.getStatuses(this.info.id, function(res) {
         self.sayingStatus = true;
         self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
-        meSpeak.speak(self.message);
+        meSpeak.speak(self.message, {
+          variant : self.info.gender === 'male' ? 'm1' : 'f1' 
+        });
       });
 
       setTimeout(function() {
@@ -103,4 +104,3 @@ define(function(require) {
 
   return Friend;
 });
-
