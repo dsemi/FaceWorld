@@ -3,15 +3,14 @@
 define(function(require) {
   var AssetManager = require('game/core/AssetManager');
 
-  var Game = function(canvasId, onload) {
+  var Game = function(canvasId, onReady) {
     var self = this;
-    this.onLoad = onload;
     this.entities = [];
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext('2d');
     this.manager = new AssetManager(function() {
-        if (self.onload) {
-          self.onLoad();
+        if (onReady) {
+          onReady();
         }
     });
   };
@@ -22,19 +21,16 @@ define(function(require) {
       entity.load(game);
     },
 
-    onLoad : function() {
-    },
-
-    onPause : function() {
+    onReady : function() {
     },
 
     onPlay : function() {
     },
 
-    onRender : function() {
+    onUpdate : function() {
     },
 
-    onUpdate : function() {
+    onRender : function() {
     },
 
     pause : function() {

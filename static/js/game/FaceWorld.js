@@ -1,17 +1,15 @@
 define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'game/Friend'],
        function(Game, AssetManager, Urls, Requests, Friend) {
+
   var CANVAS_ID = 'game-canvas',
-      game = new Game(CANVAS_ID), 
-      interval;
+      GAME_SPEED = 33;
   
-  window.game = game;
+  window.game = new Game(CANVAS_ID);
 
-  var GAME_SPEED = 33;
-
-  var cam = game.camera = {
-    x : 0,
-    y : 0
-  };
+  var mouseIsDown = false,
+      interval = 0,
+      cam = game.camera = { x : 0, y : 0 },
+      mouse = game.mouse = {x : 0, y : 0};
 
   game.onRender = function() {
     // Tile draw background
@@ -46,6 +44,16 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
 ////      game.ctx.drawImage(game.manager.get(Urls.marker), me.dest.x - cam.x, me.dest.y - cam.y);
 //    }
   };
+
+  game.onUpdate = function() {
+    // Updates the position of the player
+    if (mouseIsDown) {
+      game.me.dest = {
+        x : cam.x + mouse.x,
+        y : mouse.y - cam.y - 150
+      };
+    }
+  }
 
   game.start = function() {
       var count = 0;
@@ -112,12 +120,18 @@ define(['game/core/Game', 'game/core/AssetManager', 'utils/Urls', 'Requests', 'g
 
   // World movement
   game.canvas.addEventListener('mousedown', function(e) {
-    game.me.dest = {
-      x : cam.x + e.clientX,
-      y : e.clientY - cam.y - 150
-    };
+    mouseIsDown = true;
   });
+
+  game.canvas.addEventListener('mouseup', function(e) {
+    mouseIsDown = false;
+  });
+
+  // Update the mouse position
+  document.addEventListener('mousemove', function(e){
+      mouse.x = e.clientX || e.pageX;
+      mouse.y = e.clientY || e.pageY
+  }, false);
 
   return game;
 });
-
