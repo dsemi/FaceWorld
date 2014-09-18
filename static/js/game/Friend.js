@@ -31,7 +31,7 @@ define(function(require) {
       // Calculates drawing location
       var cam = game.camera,
           x = this.x - cam.x - stickImg.width / 2,
-          y = this.y + cam.y - stickImg.height / 2;
+          y = this.y - cam.y - stickImg.height;
 
 
       // Draws the base stick figure
@@ -42,7 +42,7 @@ define(function(require) {
         var faceImg = game.manager.get(this.faceUrl);
         game.ctx.drawImage(faceImg, x + (stickImg.width - faceImg.width) / 2, y + 5);
       }
-
+      
       // Draws the friend's name
       game.ctx.fillText(this.info.name, x, y + stickImg.height + 25);
 
@@ -61,9 +61,6 @@ define(function(require) {
       Requests.getStatuses(this.info.id, function(res) {
         self.sayingStatus = true;
         self.message = JSON.parse(res).statuses.data[Math.floor(Math.random() * 5)].message;
-        meSpeak.speak(self.message, {
-          variant : self.info.gender === 'male' ? 'm1' : 'f1' 
-        });
       });
 
       setTimeout(function() {
