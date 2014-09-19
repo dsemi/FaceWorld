@@ -1,6 +1,7 @@
 *.css
 .jshintrc
 node_modules/
+bin/
 
 dist
 cabal-dev
