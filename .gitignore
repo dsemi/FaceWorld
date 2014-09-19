@@ -1,4 +1,6 @@
-*.less
+*.css
+compile.json
+.jshintrc
 
 dist
 cabal-dev
