@@ -16,18 +16,10 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F6F88286\
 
 # Install all needed packages
 RUN apt-get update\
-    && apt-get install ${OPTS_APT} gcc\
-           libc6\
-           libc6-dev\
-           libgmp10\
-           libgmp-dev\
-           libncursesw5\
-           libtinfo5\
-           zlib1g-dev\
-           rsync
-RUN apt-get install ${OPTS_APT} llvm
-RUN apt-get install ${OPTS_APT} cabal-install-${CABVER} ghc-${GHCVER}
-RUN apt-get install ${OPTS_APT} nodejs npm
+    && apt-get install ${OPTS_APT} gcc libc6 libc6-dev libgmp10 libgmp-dev libncursesw5\
+                                   libtinfo5 zlib1g-dev rsync llvm\
+                                   cabal-install-${CABVER} ghc-${GHCVER}\
+                                   nodejs npm
 
 # Add new Haskell binaries to PATH
 ENV PATH /opt/ghc/${GHCVER}/bin:/opt/cabal/${CABVER}/bin:$PATH
