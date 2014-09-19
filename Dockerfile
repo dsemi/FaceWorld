@@ -1,33 +1,46 @@
-FROM ubuntu:14.04
+FROM phusion/baseimage:0.9.13
 
-RUN apt-get update
+# Environment variables
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV OPTS_APT -y --force-yes --no-install-recommends
+ENV CABVER 1.20
+ENV GHCVER 7.8.3
 
-RUN apt-get install -y build-essential libedit2 libglu1-mesa-dev libgmp3-dev zlib1g-dev freeglut3-dev wget
+# Add Haskell repos
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F6F88286\
+    && echo 'deb http://ppa.launchpad.net/hvr/ghc/ubuntu trusty main' >> /etc/apt/sources.list.d/haskell.list\
+   && echo 'deb-src http://ppa.launchpad.net/hvr/ghc/ubuntu trusty main' >> /etc/apt/sources.list.d/haskell.list
 
-# Download GHC
-RUN wget -q http://www.haskell.org/ghc/dist/7.8.3/ghc-7.8.3-x86_64-unknown-linux-deb7.tar.xz
-RUN tar xf ghc-7.8.3-x86_64-unknown-linux-deb7.tar.xz
-RUN rm ghc-7.8.3-x86_64-unknown-linux-deb7.tar.xz
+# Install all needed packages
+RUN apt-get update\
+    && apt-get install ${OPTS_APT} gcc\
+           libc6\
+           libc6-dev\
+           libgmp10\
+           libgmp-dev\
+           libncursesw5\
+           libtinfo5\
+           zlib1g-dev
+RUN apt-get install ${OPTS_APT} llvm
+RUN apt-get install ${OPTS_APT} cabal-install-${CABVER} ghc-${GHCVER}
 
-# Build and install GHC
-RUN cd ghc-7.8.3; ./configure && make install
-
-RUN cd ..; rm -r ghc-7.8.3
-
-RUN apt-get install -y cabal-install
-
-# Update cabal
-RUN cabal update
-RUN cabal install cabal-install
+# Add new Haskell binaries to PATH
+ENV PATH /opt/ghc/${GHCVER}/bin:/opt/cabal/${CABVER}/bin:$PATH
 
 ADD . /src
 
-EXPOSE 3000
+WORKDIR /src
 
-RUN cd /src; cabal sandbox init
+# Update cabal
+RUN cabal update
 
+RUN cabal sandbox init
 RUN cabal install --dependencies-only
+RUN cabal configure && cabal build
 
-RUN cabal configure; cabal build
+EXPOSE 3000
 
 CMD ["./dist/build/FaceWorld/FaceWorld"]
