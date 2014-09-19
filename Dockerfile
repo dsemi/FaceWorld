@@ -23,9 +23,11 @@ RUN apt-get update\
            libgmp-dev\
            libncursesw5\
            libtinfo5\
-           zlib1g-dev
+           zlib1g-dev\
+           rsync
 RUN apt-get install ${OPTS_APT} llvm
 RUN apt-get install ${OPTS_APT} cabal-install-${CABVER} ghc-${GHCVER}
+RUN apt-get install ${OPTS_APT} nodejs npm
 
 # Add new Haskell binaries to PATH
 ENV PATH /opt/ghc/${GHCVER}/bin:/opt/cabal/${CABVER}/bin:$PATH
@@ -40,6 +42,9 @@ RUN cabal update
 RUN cabal sandbox init
 RUN cabal install --dependencies-only
 RUN cabal configure && cabal build
+
+RUN cd build; ./build.sh
+RUN rsync -a bin/* .
 
 EXPOSE 3000
 
