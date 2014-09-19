@@ -1,6 +1,6 @@
 *.css
-compile.json
 .jshintrc
+node_modules/
 
 dist
 cabal-dev
