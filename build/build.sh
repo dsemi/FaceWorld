@@ -2,8 +2,13 @@
 
 OUT="../bin"
 
-# Compile all less into CSS
-# mkdir -p $OUT/static/styles
-# ./lessc/bin/lessc -x ../static/styles/main.less $OUT/static/styles/main.css
-
+echo Compiling LESS and JS
 node frontEndBuild.js $OUT
+echo Copying HTML
+cp ../static/index.html $OUT/static
+echo Copying resources
+cp -r ../static/res $OUT/static
+echo Copying thirdparty libraries
+cp -r ../static/thirdparty $OUT/static
+
+echo Build complete!

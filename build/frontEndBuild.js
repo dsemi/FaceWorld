@@ -14,7 +14,7 @@ compile.less.forEach(function(path) {
     var out = outDir + '/' + path.replace('.less', '.css');
     mkdirp.sync(out.replace(/\/[^\/]*$/, ''));
     fs.writeFileSync(out, tree.toCSS({ compress: true }));
-    console.log('LESS compilation complete.');
+    console.log('LESS compilation complete');
   });
 });
 
@@ -27,7 +27,7 @@ var config = {
 };
 
 requirejs.optimize(config, function (buildResponse) {
-    console.log('JS optimization complete.');
+    console.log('JS optimization complete');
 }, function(err) {
-    console.log('JS optimization FAILED.');
+    console.log('JS optimization FAILED');
 });
