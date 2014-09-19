@@ -19,7 +19,7 @@ define(function(require) {
     _setupSoundManager : function() {
       var manager = this;
       soundManager.setup({
-          url : '/static/thirdparty/soundmanager2/swf/',
+          url : '/thirdparty/soundmanager2/swf/',
 
           onready : manager.onready ? manager.onready : function() {
               throw 'AssetManager should be used with an onready callback!';
