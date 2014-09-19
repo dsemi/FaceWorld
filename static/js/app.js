@@ -8,7 +8,7 @@ require.config({
   },
   
    paths : {
-    'baseUrl' : '/static/js',
+    'baseUrl' : '/js',
     'facebook': '//connect.facebook.net/en_US/all'
    }
 });
